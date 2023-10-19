@@ -19,5 +19,7 @@ namespace Core.Singleton
                 Destroy(gameObject);
             }
         }
+
+        
     }
 }
