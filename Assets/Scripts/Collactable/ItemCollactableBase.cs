@@ -14,7 +14,7 @@ public class ItemCollactableBase : MonoBehaviour
     
     [Header("Sounds")] public AudioSource audio;
     
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag(compareTag))
         {

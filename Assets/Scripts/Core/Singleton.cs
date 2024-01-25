@@ -20,6 +20,6 @@ namespace Core.Singleton
             }
         }
 
-        
+
     }
 }
