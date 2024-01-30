@@ -34,13 +34,20 @@ public class PlayerController : MonoBehaviour
         _pos.z = transform.position.z;
 
   
-       
-
-
+  
         transform.position = Vector3.Lerp(transform.position, _pos, learpSpeed * Time.deltaTime);
 
 
         transform.Translate(transform.forward * speed *Time.deltaTime);
+
+        if(_pos.x < -4.86f || _pos.x > -0.25)
+        {
+            target.position = new Vector3(_pos.x < -4.86f ? -4.86f: -0.25f, target.position.y,target.position.z);
+        }    
+
+        
+
+
     }
 
 
