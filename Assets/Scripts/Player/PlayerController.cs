@@ -23,6 +23,10 @@ public class PlayerController : Singleton<PlayerController>
     [Header("Coin Setup")]
     public GameObject coinCollect;
 
+    [Header("Animation")]
+    public AnimatorManager animatorManager;
+
+
 
     //private
     private bool _canRun = false;
@@ -30,10 +34,12 @@ public class PlayerController : Singleton<PlayerController>
     private float _currentSpeed;
     private Vector3 _startPosition;
     private bool _invencible;
-
+    private float _baseSpeedAnimation = 7f;
 
     private void Start()
     {
+     
+        
         _startPosition = transform.position;
         ResetSpeed();
 
@@ -72,6 +78,7 @@ public class PlayerController : Singleton<PlayerController>
         if (other.transform.tag == tagToCheckEndline)
         {
             _canRun = false;
+            animatorManager.Play(AnimatorManager.AnimationType.IDLE);
             endScreen.SetActive(true);
         }
     }
@@ -81,6 +88,9 @@ public class PlayerController : Singleton<PlayerController>
         if (collision.transform.tag == tagToCheckEnemy && !_invencible)
         {
             _canRun = false;
+            collision.transform.DOMoveZ(1f, .3f).SetRelative();
+            transform.DOMoveZ(-1f, .3f).SetRelative();
+            animatorManager.Play(AnimatorManager.AnimationType.DEAD);
             endScreen.SetActive(true);
         }
     }
@@ -89,7 +99,9 @@ public class PlayerController : Singleton<PlayerController>
     public void StartToRun()
     {
         _canRun = true;
+
         startScreen.SetActive(false);
+        animatorManager.Play(AnimatorManager.AnimationType.RUN, _currentSpeed / _baseSpeedAnimation);
     }
 
 
@@ -102,10 +114,12 @@ public class PlayerController : Singleton<PlayerController>
     public void PowerUpSpeed(float f)
     {
         _currentSpeed += f;
+        _baseSpeedAnimation += f;
     }
     public void ResetSpeed()
     {
         _currentSpeed = speed;
+        _baseSpeedAnimation = speed;
     }
     public void SetInvencible(bool b)
     {
